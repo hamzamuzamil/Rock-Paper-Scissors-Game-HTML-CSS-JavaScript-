@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors</title>
+    <style>
+        body {
+            background-color: #2f2f2f;
+            font-family: Arial, sans-serif;
+            color: #fff;
+        }
+
+        .game-container {
+            max-width: 400px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .game-options {
+            margin-bottom: 20px;
+        }
+
+        button {
+            width: 100px;
+            height: 40px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        button:hover {
+            background-color: #3e8e41;
+        }
+
+        .rock {
+            background-color: #ff9800;
+        }
+
+        .rock:hover {
+            background-color: #e68a00;
+        }
+
+        .paper {
+            background-color: #03A9F4;
+        }
+
+        .paper:hover {
+            background-color: #039BE5;
+        }
+
+        .scissors {
+            background-color: #FF69B4;
+        }
+
+        .scissors:hover {
+            background-color: #FF59B3;
+        }
+
+        .result-container {
+            margin-bottom: 20px;
+        }
+
+        .score-container {
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Rock, Paper, Scissors</h1>
+        <div class="game-options">
+            <button class="rock" id="rock">Rock</button>
+            <button class="paper" id="paper">Paper</button>
+            <button class="scissors" id="scissors">Scissors</button>
+        </div>
+        <div class="result-container">
+            <p id="result"></p>
+        </div>
+        <div class="score-container">
+            <p id="score">You: 0 - Computer: 0</p>
+        </div>
+    </div>
+
+    <script>
+        let userScore = 0;
+        let computerScore = 0;
+
+        const rockButton = document.getElementById('rock');
+        const paperButton = document.getElementById('paper');
+        const scissorsButton = document.getElementById('scissors');
+        const resultElement = document.getElementById('result');
+        const scoreElement = document.getElementById('score');
+
+        function getComputerChoice() {
+            const choices = ['rock', 'paper', 'scissors'];
+            const randomIndex = Math.floor(Math.random() * choices.length);
+            return choices[randomIndex];
+        }
+
+        function determineWinner(userChoice, computerChoice) {
+            if (userChoice === computerChoice) {
+                return 'It\'s a tie!';
+            }
+
+            switch (userChoice) {
+                case 'rock':
+                    if (computerChoice === 'scissors') {
+                        return 'You win! Rock crushes scissors.';
+                    } else {
+                        return 'You lose! Paper covers rock.';
+                    }
+                case 'paper':
+                    if (computerChoice === 'rock') {
+                        return 'You win! Paper covers rock.';
+                    } else {
+                        return 'You lose! Scissors cuts paper.';
+                    }
+                case 'scissors':
+                    if (computerChoice === 'paper') {
+                        return 'You win! Scissors cuts paper.';
+                    } else {
+                        return 'You lose! Rock crushes scissors.';
+                    }
+            }
+        }
+
+        function updateScore(result) {
+            if (result.includes('You win')) {
+                userScore++;
+            } else if (result.includes('You lose')) {
+                computerScore++;
+            }
+
+            scoreElement.textContent = `You: ${userScore} - Computer: ${computerScore}`;
+        }
+
+        rockButton.addEventListener('click', () => {
+            const computerChoice = getComputerChoice();
+            const result = determineWinner('rock', computerChoice);
+            resultElement.textContent = `You chose rock. Computer chose ${computerChoice}. ${result}`;
+            updateScore(result);
+        });
+
+        paperButton.addEventListener('click', () => {
+            const computerChoice = getComputerChoice();
+            const result = determineWinner('paper', computerChoice);
+            resultElement.textContent = `You chose paper. Computer chose ${computerChoice}. ${result}`;
+            updateScore(result);
+        });
+
+        scissorsButton.addEventListener('click', () => {
+            const computerChoice = getComputerChoice();
+            const result = determineWinner('scissors', computerChoice);
+            resultElement.textContent = `You chose scissors. Computer chose ${computerChoice}. ${result}`;
+            updateScore(result);
+        });
+    </script>
+</body>
+</html>
